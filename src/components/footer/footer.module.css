@@ -6,3 +6,13 @@
     color:blueviolet;
     font-size: small;
 }
+.social{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.icon{
+    opacity: 0.6;
+    cursor: pointer;
+}
