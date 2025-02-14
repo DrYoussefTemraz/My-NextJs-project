@@ -15,8 +15,8 @@ const About = () => {
 
                 />
                 <div className={styles.imgText}>
-                    <h1 className={styles.imgTitle}></h1>
-                    <h2 className={styles.imgDesc}></h2>
+                    <h1 className={styles.imgTitle}>Image text </h1>
+                    <h2 className={styles.imgDesc}>Image description</h2>
                 </div>
             </div>
             <div className={styles.textContainer}>
