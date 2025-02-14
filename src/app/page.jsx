@@ -10,7 +10,7 @@ export default function Home() {
         <h1 className={styles.title}>Better Design for you</h1>
         <p className={styles.desc}>  Craft intuitive and visually stunning digital experiences that captivate your audience. Our design solutions blend creativity with functionality,
         </p>
-        <Button url='/portfolio' tet='See our works'/>
+        <Button url='/portfolio' text='See our works'/>
         
       </div>
       <div className={styles.item}>
