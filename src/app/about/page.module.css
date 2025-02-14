@@ -26,15 +26,23 @@ position: relative;
 
 }
 .textContainer{
-
+display: flex;
+gap: 100px;
 }
 .item{
-
+flex: 1;
+margin-top: 50p;
+display: -webkit-flex;
+flex-direction: column;
+gap: 30px;
 }
 .title{
 
 }
 .desc{
+    font-size: 19-8px;
+    font-weight: bold;
+    text-align: justify;
 
 }
 

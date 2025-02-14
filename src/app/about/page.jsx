@@ -21,13 +21,13 @@ const About = () => {
             </div>
             <div className={styles.textContainer}>
                 <div className={styles.item}>
-                    <h1 className={styles.title}>here is the left <br/>title</h1>
-                    <p className={styles.desc}>here is the left <br/>desc</p>
+                    <h1 className={styles.title}>here is the left title </h1>
+                    <p className={styles.desc}>here is the left <br/>desc <br/> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, nihil! Tempora voluptatem ab laboriosam sunt odio impedit eos delectus iure dolore optio earum cum hic, <br/>beatae totam inventore sed quod.</p>
                 </div>
                 <div className={styles.item}>
-                    <h1 className={styles.title}>here is the right <br/>title</h1>
-                    <p className={styles.desc}>here is the right <br/> desc</p>
-                    <Button url='/contact' tet='contact'/>
+                    <h1 className={styles.title}>here is the right title</h1>
+                    <p className={styles.desc}>here is the right <br/> desc <br/> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestiae, nihil! Tempora voluptatem ab laboriosam sunt odio impedit eos delectus iure dolore optio earum cum hic, <br/>beatae totam inventore sed quod.</p>
+                    <Button url='/contact' text='contact'/>
                 </div>
 
             </div>
