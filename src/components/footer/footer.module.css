@@ -1,10 +1,9 @@
 .container{
     height: 50px;
+    font-size: 14px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    color:blueviolet;
-    font-size: small;
+    justify-content: space-between;
 }
 .social{
     display: flex;
