@@ -19,8 +19,7 @@ async function getData(id) {
 
 }
 const BlogPost = async ({ params }) => {
-    const { id } = params;
-    const data = await getData(id);
+    const data = await getData(params.id);
     return (
         <div className={styles.container}>
             <div className={styles.top}>
