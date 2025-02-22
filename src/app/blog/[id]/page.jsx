@@ -18,6 +18,17 @@ async function getData(id) {
     return res.json();
 
 }
+// Dynamic Metadata
+export async function generateMetadata({params}) {
+    const {id} = await params
+   const post = await getData(id)
+   return {
+        title: post.title, 
+        description: post.desc
+        
+    }
+}
+
 const BlogPost = async ({ params }) => {
     // New way of waiting params in Next
     const {id} = await params
