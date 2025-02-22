@@ -3,8 +3,7 @@ import connect from "@/utils/db"
 import Post from "@/modules/Post"
 
 export const GET = async (request, { params }) => {
-    const { id } = params;
-  
+    const { id } = await params;
     try {
       await connect();
   

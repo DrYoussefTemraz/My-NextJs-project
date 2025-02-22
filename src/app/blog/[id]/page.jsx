@@ -19,7 +19,9 @@ async function getData(id) {
 
 }
 const BlogPost = async ({ params }) => {
-    const data = await getData(params.id);
+    // New way of waiting params in Next
+    const {id} = await params
+    const data = await getData(id);
     return (
         <div className={styles.container}>
             <div className={styles.top}>
