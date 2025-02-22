@@ -1,11 +1,11 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import styles from "./page.module.css"
-import Error from "next/error";
 import useSWR from "swr";
+import { useSession } from "next-auth/react";
 const Dashboard = () => {
-    
-        //OLD WAY TO FETCH DATA
+
+    //OLD WAY TO FETCH DATA
     // const [data, setData] = useState([])
     // const [error, setError] = useState(false)
     // const [isLoading, setIsLoading] = useState(false)
@@ -31,17 +31,16 @@ const Dashboard = () => {
     //     getData()
     // }, [])
 
+
+    // **using useSession
+    const session = useSession();
+    console.log(session)
+    
+
     //** using SWR for fetching data [SWR is a popular React library for data fetching].
 
     const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const { data, error, isLoading } = useSWR (`https://jsonplaceholder.typicode.com/posts`, fetcher)
-
-
-
-
-    console.log(data)
-
-
+    const { data, error, isLoading } = useSWR(`https://jsonplaceholder.typicode.com/posts`, fetcher)
     return (
         <div className={styles.container}>Dashboard</div>
     )
