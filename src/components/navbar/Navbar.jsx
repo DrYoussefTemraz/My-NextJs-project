@@ -50,7 +50,7 @@ const Navbar = () => {
                     <Link key={link.id} href={link.url} className={styles.link}> {link.title} </Link>
                 ))}
                 {
-                    session.status === "authinticated" && (
+                    session.status === "authenticated" && (
                         <button
                             onClick={signOut}
                             className={styles.logout}>
@@ -58,9 +58,6 @@ const Navbar = () => {
                         </button>
                     )
                 }
-
-
-
             </div>
 
         </div>

@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./page.module.css"
 import useSWR from "swr";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import loading from "../contact/loading";
 const Dashboard = () => {
 
     //OLD WAY TO FETCH DATA
@@ -34,15 +36,31 @@ const Dashboard = () => {
 
     // **using useSession
     const session = useSession();
-    console.log(session)
-    
+    const router = useRouter()
+    console.log(session);
 
-    //** using SWR for fetching data [SWR is a popular React library for data fetching].
+    // Fetching data with SWR
+    const fetcher = (...args) => fetch(...args).then(res => res.json());
+    const { data, error, isLoading } = useSWR(`https://jsonplaceholder.typicode.com/posts`, fetcher);
 
-    const fetcher = (...args) => fetch(...args).then(res => res.json())
-    const { data, error, isLoading } = useSWR(`https://jsonplaceholder.typicode.com/posts`, fetcher)
-    return (
-        <div className={styles.container}>Dashboard</div>
-    )
-}
-export default Dashboard
+    // ✅ Use useEffect for navigation
+    useEffect(() => {
+        if (session.status === "unauthenticated") {
+            router?.push('/dashboard/login');
+        }
+    }, [session.status, router]);  // Runs when session.status changes
+
+    if (session.status === "loading") {
+        return <p>Loading...</p>;
+    }
+
+    if (session.status === "authenticated") {
+        return (
+            <div className={styles.container}>Dashboard</div>
+        );
+    }
+
+    return null; // Return null if user is unauthenticated to prevent rendering issues
+};
+
+export default Dashboard;

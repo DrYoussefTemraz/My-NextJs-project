@@ -1,20 +1,33 @@
 "use client"
-import React from 'react'
+import React, { useEffect } from 'react'
 import styles from './page.module.css'
-import { signIn } from 'next-auth/react'
+import { signIn, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const Login = () => {
+    const session = useSession()
+    const router = useRouter()
+// ordering the hooks is important not to violate react roles.
+    useEffect(() => {
+        if (session.status === "authenticated") {
+            router?.push('/dashboard');
+        }
+    }, [session.status, router]);  // Runs when session.status changes
+
+    if (session.status === "loading") {
+        return <p>Loading...</p>;
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
         const email = e.target[0].value;
         const password = e.target[1].value;
-    
+
         const result = await signIn("credentials", {
             redirect: false,  // Prevents automatic navigation
             email,
             password,
         });
-    
+
         if (result?.error) {
             console.error("Login error:", result.error);
         } else {
