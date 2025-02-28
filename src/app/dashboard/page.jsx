@@ -5,6 +5,8 @@ import useSWR from "swr";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import loading from "../contact/loading";
+import Image from "next/image";
+import { Island_Moments } from "next/font/google";
 const Dashboard = () => {
 
     //OLD WAY TO FETCH DATA
@@ -41,7 +43,8 @@ const Dashboard = () => {
 
     // Fetching data with SWR
     const fetcher = (...args) => fetch(...args).then(res => res.json());
-    const { data, error, isLoading } = useSWR(`https://jsonplaceholder.typicode.com/posts`, fetcher);
+    const { data, error, isLoading } = useSWR(`/api/posts?username=${session?.data?.user.name}`, fetcher);
+    console.log(data)
 
     // ✅ Use useEffect for navigation
     useEffect(() => {
@@ -53,10 +56,70 @@ const Dashboard = () => {
     if (session.status === "loading") {
         return <p>Loading...</p>;
     }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const title = e.target[0].value
+        const desc = e.target[1].value
+        const img = e.target[2].value
+        const content = e.target[3].value
+
+        try {
+            await fetch("/api/posts", {
+                method: "POST",
+                body: JSON.stringify({
+                    title,
+                    desc,
+                    img,
+                    content,
+                    username: session?.data?.user.name,
+                }),
+            });
+
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
 
     if (session.status === "authenticated") {
         return (
-            <div className={styles.container}>Dashboard</div>
+            <div className={styles.container}>
+                <div className={styles.posts}>
+                    {isLoading
+                        ? "loading"
+                        : data?.map((post) => (
+                            <div className={styles.post} key={post._id}>
+                                <div className={styles.imgContainer}>
+                                    <Image src={post.img} alt="" width={200} height={100} />
+                                </div>
+                                <h2 className={styles.postTitle}>{post.title}</h2>
+                                <span
+                                    className={styles.delete}
+                                    onClick={() => handleDelete(post._id)}
+                                >
+                                    X
+                                </span>
+                            </div>
+                        ))}
+                </div>
+                <form className={styles.new} onSubmit={handleSubmit}>
+                    <h2>Add New Post</h2>
+                    <input type="text" placeholder="title" className={styles.input} />
+                    <input type="text" placeholder="Desc" className={styles.input} />
+                    <input type="text" placeholder="Image" className={styles.input} />
+                    <textarea
+                        placeholder="Content"
+                        className={styles.textarea}
+                        cols="30"
+                        rows="10">
+                    </textarea>
+                    <button className={styles.button}>Send</button>
+
+                </form>
+
+
+            </div>
         );
     }
 
