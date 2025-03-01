@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import styles from './page.module.css'
-import gogo from '../../public/joe12.jpeg'
+import hello from '../../public/hellothere.png'
 import Button from '@/components/Botton/Button';
 
 export default function Home() {
@@ -14,7 +14,7 @@ export default function Home() {
         
       </div>
       <div className={styles.item}>
-        <Image src={gogo} alt='hhh' className={styles.img} />
+        <Image src={hello} alt='hhh' className={styles.img} />
       </div>
     </div>
   )
