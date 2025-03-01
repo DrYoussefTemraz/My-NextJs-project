@@ -43,7 +43,7 @@ const Dashboard = () => {
 
     // Fetching data with SWR
     const fetcher = (...args) => fetch(...args).then(res => res.json());
-    const { data, error, isLoading } = useSWR(`/api/posts?username=${session?.data?.user.name}`, fetcher);
+    const { data, error, mutate, isLoading } = useSWR(`/api/posts?username=${session?.data?.user.name}`, fetcher);
     console.log(data)
 
     // ✅ Use useEffect for navigation
@@ -64,6 +64,7 @@ const Dashboard = () => {
         const content = e.target[3].value
 
         try {
+            //creating a post  and send it to the backend
             await fetch("/api/posts", {
                 method: "POST",
                 body: JSON.stringify({
@@ -74,8 +75,18 @@ const Dashboard = () => {
                     username: session?.data?.user.name,
                 }),
             });
+            mutate()
+            e.target.reset()
 
+        } catch (err) {
+            console.log(err)
+        }
 
+    }
+    const handleDelete = async (id) => {
+        try {
+            await fetch(`/api/posts/${id}`, { method: "DELETE" })
+            mutate()
         } catch (err) {
             console.log(err)
         }
@@ -110,9 +121,9 @@ const Dashboard = () => {
                     <input type="text" placeholder="Image" className={styles.input} />
                     <textarea
                         placeholder="Content"
-                        className={styles.textarea}
+                        className={styles.textArea}
                         cols="30"
-                        rows="10">
+                        rows="8">
                     </textarea>
                     <button className={styles.button}>Send</button>
 
