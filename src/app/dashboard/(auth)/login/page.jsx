@@ -3,11 +3,12 @@ import React, { useEffect } from 'react'
 import styles from './page.module.css'
 import { signIn, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 const Login = () => {
     const session = useSession()
     const router = useRouter()
-// ordering the hooks is important not to violate react roles.
+    // ordering the hooks is important not to violate react roles.
     useEffect(() => {
         if (session.status === "authenticated") {
             router?.push('/dashboard');
@@ -56,12 +57,19 @@ const Login = () => {
 
             </form>
             {/* <button onClick={()=>{signIn("google", { redirect: false })}}>login with Google</button> */}
-            <button onClick={async () => {
-                const result = await signIn("google", { redirect: false });
-                if (result?.error) {
-                    console.error("Google login error:", result.error);
-                }
-            }}>Login with Google</button>
+            <button
+                className={styles.button + " " + styles.google}
+                onClick={async () => {
+                    const result = await signIn("google", { redirect: false });
+                    if (result?.error) {
+                        console.error("Google login error:", result.error);
+                    }
+                }}>Login with Google
+            </button>
+            <span className={styles.or}>- OR -</span>
+            <Link className={styles.link} href="/dashboard/register">
+                Create new account
+            </Link>
         </div>
     )
 }
